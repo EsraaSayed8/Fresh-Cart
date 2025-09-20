@@ -6,7 +6,8 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/login",
   },
-
+  session: { strategy: "jwt" },
+  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     Credentials({
       name: "Credentials",
@@ -14,7 +15,6 @@ export const authOptions: NextAuthOptions = {
         email: {},
         password: {},
       },
-
       authorize: async (credentials) => {
         const res = await fetch(`${process.env.API_BASEURL}/auth/signin`, {
           method: "POST",
@@ -23,7 +23,7 @@ export const authOptions: NextAuthOptions = {
           },
           body: JSON.stringify({
             email: credentials?.email,
-            password: credentials?.password
+            password: credentials?.password,
           }),
         });
 
@@ -31,7 +31,6 @@ export const authOptions: NextAuthOptions = {
 
         if (payload.message === "success") {
           const decodedToken: { id: string } = jwtDecode(payload.token);
-
           return {
             id: decodedToken.id,
             user: payload.user,
@@ -43,18 +42,16 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
-
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.user = user.user;
-        token.token = user.token;
+        (token as unknown as { user?: unknown }).user = (user as unknown as { user?: unknown }).user;
+        (token as unknown as { token?: string }).token = (user as unknown as { token?: string }).token;
       }
       return token;
     },
-
     async session({ session, token }) {
-      session.user = token.user;
+      (session as unknown as { user?: unknown }).user = (token as unknown as { user?: unknown }).user;
       return session;
     },
   },

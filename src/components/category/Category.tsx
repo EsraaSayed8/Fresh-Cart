@@ -44,7 +44,7 @@ export default async function Category({
     <div className='w-1/2 md:w-1/3 lg:w-1/4 xl:1/5'>
       <div className='p-2 lg:p-4'>
         <Link href={`/categories/${category._id}`}>
-          <Card className='gap-1 p-2'>
+          <Card className='gap-1 p-2  aspect-[2/4]'>
             <CardHeader className='px-2!'>
               <CardTitle>
                 <Image

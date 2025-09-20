@@ -19,7 +19,7 @@ import { registerSchema, RegisterSchemaType } from "@/schema/register.schema";
 
 export default function RegisterForm() {
   const router = useRouter();
-  const form = useForm({
+  const form = useForm<RegisterSchemaType>({
     defaultValues: {
       name: "",
       email: "",
@@ -32,13 +32,16 @@ export default function RegisterForm() {
 
   async function handleRegister(values: RegisterSchemaType) {
     try {
-      const res = await fetch(`${process.env.API_BASEURL}/auth/signup`, {
+      const res = await fetch("/api/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(values),
       });
+
+      const payload = await res.json().catch(() => ({}));
+
       if (res.ok) {
         toast.success("You Registerd Successfully 👌", {
           position: "bottom-right",
@@ -46,16 +49,21 @@ export default function RegisterForm() {
         });
         router.push("/login");
       } else {
-        throw new Error("Request could not be made!");
+        const msg =
+          payload?.message ||
+          payload?.error ||
+          payload?.errors?.[0] ||
+          "Request could not be made!";
+        throw new Error(msg);
       }
     } catch (error) {
       if (error instanceof TypeError) {
-        toast.error("Faild to send request, you might be offline!", {
+        toast.error("Failed to send request, you might be offline!", {
           position: "bottom-right",
           duration: 2000,
         });
       } else if (error instanceof Error) {
-        toast.error(error?.message, {
+        toast.error(error.message, {
           position: "bottom-right",
           duration: 2000,
         });
@@ -64,15 +72,15 @@ export default function RegisterForm() {
   }
 
   return (
-    <div className='m-10'>
-      <h1 className='font-bold text-center text-[#0c5a5cdc] text-3xl my-8'>Sign Up</h1>
+    <div className="m-10">
+      <h1 className="font-bold text-center text-[#0c5a5cdc] text-3xl my-8">Sign Up</h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleRegister)}>
           <FormField
             control={form.control}
-            name='name'
+            name="name"
             render={({ field }) => (
-              <FormItem className='mb-4'>
+              <FormItem className="mb-4">
                 <FormLabel>Name:</FormLabel>
                 <FormControl>
                   <Input {...field} />
@@ -83,12 +91,12 @@ export default function RegisterForm() {
           />
           <FormField
             control={form.control}
-            name='email'
+            name="email"
             render={({ field }) => (
-              <FormItem className='mb-4'>
+              <FormItem className="mb-4">
                 <FormLabel>Email:</FormLabel>
                 <FormControl>
-                  <Input type='email' {...field} />
+                  <Input type="email" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -96,12 +104,12 @@ export default function RegisterForm() {
           />
           <FormField
             control={form.control}
-            name='phone'
+            name="phone"
             render={({ field }) => (
-              <FormItem className='mb-4'>
+              <FormItem className="mb-4">
                 <FormLabel>Phone:</FormLabel>
                 <FormControl>
-                  <Input type='tel' {...field} />
+                  <Input type="tel" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -109,12 +117,12 @@ export default function RegisterForm() {
           />
           <FormField
             control={form.control}
-            name='password'
+            name="password"
             render={({ field }) => (
-              <FormItem className='mb-4'>
+              <FormItem className="mb-4">
                 <FormLabel>Password:</FormLabel>
                 <FormControl>
-                  <Input type='password' {...field} />
+                  <Input type="password" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -122,24 +130,27 @@ export default function RegisterForm() {
           />
           <FormField
             control={form.control}
-            name='rePassword'
+            name="rePassword"
             render={({ field }) => (
-              <FormItem className='mb-4'>
+              <FormItem className="mb-4">
                 <FormLabel>Confirm Password:</FormLabel>
                 <FormControl>
-                  <Input type='password' {...field} />
+                  <Input type="password" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <div className='text-gray-600 text-center w-full'>
+          <div className="text-gray-600 text-center w-full">
             Already have an account?{" "}
-            <Link href='/login' className='underline text-[#0c5a5cdc] font-bold'>
+            <Link href="/login" className="underline text-[#0c5a5cdc] font-bold">
               Login!
             </Link>
           </div>
-          <Button type='submit' className=' my-4 w-full bg-[#0c5a5cdc] hover:bg-white hover:text-[#0c5a5cdc] cursor-pointer'>
+          <Button
+            type="submit"
+            className=" my-4 w-full bg-[#0c5a5cdc] hover:bg-white hover:text-[#0c5a5cdc] cursor-pointer"
+          >
             Register Now
           </Button>
         </form>

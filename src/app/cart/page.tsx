@@ -39,7 +39,7 @@ export default function Cart() {
   let total = 0;
   return (
     <div className='w-[90%] lg:w-[70%] mx-auto p-4 min-h-[90vh]'>
-      <div className='flex flex-col gap-4'>
+      <div className='flex flex-col bg-gray-200 gap-4'>
         {cart!.products.length > 0 ? (
           cart!.products.map((cartItem: CartItemType) => {
             total += cartItem.count * cartItem.price;
@@ -52,9 +52,9 @@ export default function Cart() {
             );
           })
         ) : (
-          <div className='mt-24 text-center'>
-            <h1 className='text-3xl md:text-5xl'>Your cart is empty!</h1>
-            <Link href='/products' className='text-gray-600 text-xl underline'>
+          <div className='mt-24 text-center p-5'>
+            <h1 className='text-3xl md:text-5xl text-[#0c5a5cdc] pb-5'>Your cart is empty!</h1>
+            <Link href='/products' className='text-gray-600 text-xl underline '>
               Ready to start shopping?
             </Link>
           </div>

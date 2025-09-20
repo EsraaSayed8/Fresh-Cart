@@ -32,7 +32,7 @@ export default async function Categories() {
   return (
     <div className='flex flex-col items-center justify-center py-2 min-h-[90vh]'>
       <div className='w-[90%] lg:w-[70%] mx-auto my-4'>
-        <div className='flex flex-wrap'>
+        <div className='flex flex-wrap  aspect-[2/1]'>
           {categories.map((category: CategoryType) => (
             <Category key={category._id} category={category} />
           ))}
