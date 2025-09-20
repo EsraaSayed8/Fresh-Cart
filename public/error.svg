@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="750" viewBox="0 0 1200 750" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">404 Page Not Found</title>
+  <desc id="desc">A playful landscape 404 illustration in green and white.</desc>
+
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#C8F3D4"/>
+      <stop offset="100%" stop-color="#85D9A3"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2EA66E"/>
+      <stop offset="100%" stop-color="#198F5C"/>
+    </linearGradient>
+    <filter id="softShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#1b6b48" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="750" fill="url(#bg)"/>
+
+  <!-- Abstract swooshes -->
+  <path d="M80,520 C220,430 410,470 560,420 C710,370 890,350 1120,410" stroke="#9FE4BA" stroke-width="18" stroke-linecap="round" fill="none" opacity="0.5"/>
+  <path d="M120,580 C300,520 540,560 760,530 C980,500 1120,520 1180,560" stroke="#AEECC6" stroke-width="12" stroke-linecap="round" fill="none" opacity="0.6"/>
+
+  <!-- Left plant -->
+  <g transform="translate(160,360)">
+    <path d="M60 180 C65 120 70 70 72 20" stroke="#2B8A5B" stroke-width="8" fill="none" stroke-linecap="round"/>
+    <path d="M70 90 C20 40 30 10 85 15 C140 20 160 80 120 100 C100 110 88 102 70 90Z" fill="#37B26C"/>
+    <path d="M68 150 C10 120 15 80 85 90 C150 100 165 150 120 160 C100 165 85 160 68 150Z" fill="#2EA66E"/>
+    <path d="M55 200 C-10 170 -5 130 65 140 C125 150 140 195 100 205 C82 210 70 206 55 200Z" fill="#2EA66E"/>
+  </g>
+
+  <!-- Right phone with exclamation -->
+  <g transform="translate(870,250)" filter="url(#softShadow)">
+    <rect x="0" y="0" rx="26" ry="26" width="220" height="360" fill="#1E8D5F"/>
+    <rect x="18" y="24" rx="18" ry="18" width="184" height="312" fill="#E8FFF1"/>
+    <rect x="90" y="18" width="40" height="6" rx="3" fill="#0E6A47"/>
+    <path d="M110 120 L158 202 C161 208 156 216 149 216 H71 C64 216 59 208 62 202 L110 120 Z" fill="#2EA66E"/>
+    <rect x="106" y="152" width="8" height="36" rx="4" fill="white"/>
+    <circle cx="110" cy="205" r="6" fill="white"/>
+  </g>
+
+  <!-- Central rounded card with 404 -->
+  <g transform="translate(210,230)" filter="url(#softShadow)">
+    <rect x="0" y="0" width="640" height="300" rx="60" fill="url(#card)"/>
+    <g fill="white">
+      <text x="320" y="175" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial" font-weight="800" font-size="170">404</text>
+      <text x="320" y="235" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial" font-weight="700" font-size="44">Page not found</text>
+    </g>
+  </g>
+
+  <!-- CTA / hint -->
+  <g transform="translate(210,566)">
+    <circle cx="20" cy="20" r="6" fill="#1B7E55"/>
+    <text x="36" y="26" fill="#0C5A3D" font-size="22" font-weight="600" font-family="Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial">
+      ارجع للصفحة الرئيسية أو جرّب البحث
+    </text>
+  </g>
+</svg>
