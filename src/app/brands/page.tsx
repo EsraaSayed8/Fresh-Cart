@@ -4,7 +4,10 @@ import { ResponseDataType } from "@/types/responseData.type";
 import React from "react";
 
 export default async function Brands() {
-  const brandsRes = await fetch(`${process.env.API_BASEURL}/brands`);
+  // استخدم fallback لو process.env.API_BASEURL undefined
+  const baseUrl = process.env.API_BASEURL || "https://linked-posts.routemisr.com";
+
+  const brandsRes = await fetch(`${baseUrl}/brands`);
 
   if (!brandsRes.ok) throw new Error("Failed to fetch brands");
 
