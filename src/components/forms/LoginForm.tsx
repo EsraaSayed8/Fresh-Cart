@@ -1,3 +1,4 @@
+// LoginForm.tsx
 "use client";
 import React from "react";
 import { Button } from "@/components/ui/button";
@@ -40,7 +41,7 @@ export default function LoginForm() {
           position: "bottom-right",
           duration: 2000,
         });
-        window.location.href = "/"; 
+        window.location.href = "/";
       } else {
         toast.error(res?.error, {
           position: "bottom-right",
@@ -48,7 +49,7 @@ export default function LoginForm() {
         });
       }
     } catch (_) {
-      toast.error("Faild to send request, you might be offline!", {
+      toast.error("Failed to send request, you might be offline!", {
         position: "bottom-right",
         duration: 2000,
       });
@@ -56,52 +57,69 @@ export default function LoginForm() {
   }
 
   return (
-    <div className='h-full flex flex-col items-stretch px-10 justify-center'>
-      <h1 className='font-bold text-[#0c5a5cdc] text-center text-3xl m-8 '>Log In</h1>
+    <div className="flex flex-col items-stretch justify-center">
+      <h1 className="font-bold text-emerald-700 text-center text-3xl mb-8">
+        LogIn
+      </h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleLogin)}>
           <FormField
             control={form.control}
-            name='email'
+            name="email"
             render={({ field }) => (
-              <FormItem className='mb-4'>
-                <FormLabel>Email:</FormLabel>
+              <FormItem className="mb-4">
+                <FormLabel className="font-semibold text-gray-700">Email:</FormLabel>
                 <FormControl>
-                  <Input type='email' {...field} />
+                  <Input
+                    type="email"
+                    {...field}
+                    className="rounded-md border-gray-300 focus:border-emerald-700 focus:ring-emerald-700"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
+
           <FormField
             control={form.control}
-            name='password'
+            name="password"
             render={({ field }) => (
-              <FormItem className='mb-4'>
-                <FormLabel>Password:</FormLabel>
+              <FormItem className="mb-4">
+                <FormLabel className="font-semibold text-gray-700">Password:</FormLabel>
                 <FormControl>
-                  <Input type='password' {...field} />
+                  <Input
+                    type="password"
+                    {...field}
+                    className="rounded-md border-gray-300 focus:border-emerald-700 focus:ring-emerald-700"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <div className='text-gray-600 text-center w-full'>
-            Don&apos;T have an account?{" "}
-            <Link href='/register' className='underline text-[#0c5a5cdc] font-bold'>
-              Signup!
-            </Link>
-          </div>
-          <div className='text-[#0c5a5cdc] text-center w-full'>
-            <Link
-            
-              href='/forget-password'
-              className='underline text-[#0c5a5cdc] font-bold'
-            >            Forgot password?{" "}
 
-            </Link>
+          <div className="flex flex-col items-center gap-2 text-center mb-4">
+            <p className="text-gray-600">
+              Don&apos;t have an account?{" "}
+              <Link href="/register" className="underline text-emerald-700 font-semibold hover:text-emerald-800">
+                Signup!
+              </Link>
+            </p>
+            <p>
+              <Link
+                href="/forget-password"
+                className="underline text-emerald-700 font-semibold hover:text-emerald-800"
+              >
+                Forgot password?
+              </Link>
+            </p>
           </div>
-          <Button type='submit' className=' bg-[#0c5a5cdc] hover:bg-white hover:text-[#0c5a5cdc] my-4 w-full cursor-pointer'>
+
+          <Button
+            type="submit"
+            className="w-full py-2 rounded-lg bg-emerald-700 text-white hover:bg-white hover:text-emerald-700 border border-emerald-700 transition-colors duration-300"
+          >
             Login
           </Button>
         </form>

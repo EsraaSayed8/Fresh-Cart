@@ -31,6 +31,7 @@ export default function CheckoutPage() {
   const context = useContext(CartContext);
   if (!context) throw new Error("Cart Context does not exist");
   const { setNumberOfItems } = context;
+
   const [loading, setLoading] = useState(true);
   const [cartId, setCartId] = useState();
   const [addressess, setAddressess] = useState<AddressType[]>([]);
@@ -54,7 +55,7 @@ export default function CheckoutPage() {
 
   async function handleSubmit() {
     if (value == "")
-      return toast.error("Please select a shiping address!", {
+      return toast.error("Please select a shipping address!", {
         position: "bottom-right",
         duration: 2000,
       });
@@ -116,96 +117,108 @@ export default function CheckoutPage() {
 
   useEffect(() => {
     load();
-  }, [load]);
+  }, []);
 
   if (loading)
     return (
-      <div className='flex flex-col items-center justify-center py-8 min-h-[90vh]'>
-        <span className='loader'></span>
+      <div className="flex flex-col items-center justify-center py-8 min-h-[90vh]">
+        <span className="loader"></span>
       </div>
     );
 
   return (
-    <div className='flex flex-col items-center py-2 min-h-[90vh]'>
-      <div className='w-full lg:w-[70%] p-4'>
-        <h1 className='text-xl lg:text-3xl font-semibold text-center m-4'>
-          Please choose a payment option and an address!
+    <div className="flex flex-col items-center justify-center py-10 min-h-[90vh] bg-gray-50">
+      <div className="w-full lg:w-[70%] p-6 lg:p-12 bg-white rounded-2xl shadow-lg space-y-8">
+        <h1 className="text-2xl lg:text-4xl font-bold text-center text-gray-800">
+          Checkout
         </h1>
-        <div className='w-full flex flex-col shadow-lg shadow-gray-200 p-8 lg:p-16 rounded-lg gap-8'>
-          <div className='addresses'>
-            <Popover open={open} onOpenChange={setOpen}>
-              <PopoverTrigger asChild>
-                <Button
-                  variant='outline'
-                  role='combobox'
-                  aria-expanded={open}
-                  className='justify-between w-full'
-                >
-                  {value
-                    ? addressess.find((address) => address._id === value)?.name
-                    : "Select an address..."}
-                  <ChevronsUpDownIcon className='ml-2 h-4 w-4 shrink-0 opacity-50' />
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className='w-[200px] p-0'>
-                <Command>
-                  <CommandInput placeholder='Search framework...' />
-                  <CommandList>
-                    <CommandEmpty>No framework found.</CommandEmpty>
-                    <CommandGroup>
-                      {addressess.map((address) => (
-                        <CommandItem
-                          key={address._id}
-                          value={address._id}
-                          onSelect={(currentValue) => {
-                            setValue(
-                              currentValue === value ? "" : currentValue
-                            );
-                            setOpen(false);
-                          }}
-                        >
-                          <CheckIcon
-                            className={cn(
-                              "mr-2 h-4 w-4",
-                              value === address._id
-                                ? "opacity-100"
-                                : "opacity-0"
-                            )}
-                          />
-                          {address.name}
-                        </CommandItem>
-                      ))}
-                    </CommandGroup>
-                  </CommandList>
-                </Command>
-              </PopoverContent>
-            </Popover>
-          </div>
-          <div className='flex items-center justify-around'>
-            <button
-              onClick={() => setMethod("cash")}
-              className='size-[100px] md:size-[150px] lg:size-[250px] xl:size-[400px] shadow-gray-300 shadow-lg rounded-2xl flex flex-col items-center justify-center gap-3 lg:gap-6 disabled:bg-gray-100 cursor-pointer'
-              disabled={method === "cash"}
-            >
-              <i className='text-4xl lg:text-9xl fas fa-money-bills'></i>
-              <h2>Cash</h2>
-            </button>
-            <button
-              onClick={() => setMethod("card")}
-              className='size-[100px] md:size-[150px] lg:size-[250px] xl:size-[400px] shadow-gray-300 shadow-lg rounded-2xl flex flex-col items-center justify-center gap-3 lg:gap-6 disabled:bg-gray-100 cursor-pointer'
-              disabled={method === "card"}
-            >
-              <i className='text-4xl lg:text-9xl fas fa-credit-card'></i>
-              <h2>Card</h2>
-            </button>
-          </div>
-          <Button
-            onClick={handleSubmit}
-            className='w-full md:w-1/2 lg:w-1/4 mx-auto block lg:mt-6'
-          >
-            Confirm
-          </Button>
+        <p className="text-center text-gray-500">
+          Please choose a payment option and an address
+        </p>
+
+        {/* Address Selector */}
+        <div>
+          <Popover open={open} onOpenChange={setOpen}>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                role="combobox"
+                aria-expanded={open}
+                className="justify-between w-full rounded-lg px-4 py-6 text-lg"
+              >
+                {value
+                  ? addressess.find((address) => address._id === value)?.name
+                  : "Select an address..."}
+                <ChevronsUpDownIcon className="ml-2 h-5 w-5 shrink-0 opacity-50" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-[250px] p-0">
+              <Command>
+                <CommandInput placeholder="Search address..." />
+                <CommandList>
+                  <CommandEmpty>No address found.</CommandEmpty>
+                  <CommandGroup>
+                    {addressess.map((address) => (
+                      <CommandItem
+                        key={address._id}
+                        value={address._id}
+                        onSelect={(currentValue) => {
+                          setValue(currentValue === value ? "" : currentValue);
+                          setOpen(false);
+                        }}
+                      >
+                        <CheckIcon
+                          className={cn(
+                            "mr-2 h-4 w-4",
+                            value === address._id
+                              ? "opacity-100 text-emerald-500"
+                              : "opacity-0"
+                          )}
+                        />
+                        {address.name}
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                </CommandList>
+              </Command>
+            </PopoverContent>
+          </Popover>
         </div>
+
+        <div className="flex items-center justify-around gap-6 flex-wrap">
+          <button
+            onClick={() => setMethod("cash")}
+            className={cn(
+              "w-40 h-40 sm:w-48 sm:h-48 flex flex-col items-center justify-center rounded-2xl border-2 shadow-md transition-all duration-300",
+              method === "cash"
+                ? "border-emerald-500 bg-emerald-50 text-emerald-600"
+                : "border-gray-200 bg-gray-50 hover:border-emerald-300"
+            )}
+          >
+            <i className="text-5xl fas fa-money-bills"></i>
+            <h2 className="mt-2 font-semibold">Cash</h2>
+          </button>
+
+          <button
+            onClick={() => setMethod("card")}
+            className={cn(
+              "w-40 h-40 sm:w-48 sm:h-48 flex flex-col items-center justify-center rounded-2xl border-2 shadow-md transition-all duration-300",
+              method === "card"
+                ? "border-emerald-500 bg-emerald-50 text-emerald-600"
+                : "border-gray-200 bg-gray-50 hover:border-emerald-300"
+            )}
+          >
+            <i className="text-5xl fas fa-credit-card"></i>
+            <h2 className="mt-2 font-semibold">Card</h2>
+          </button>
+        </div>
+
+        <Button
+          onClick={handleSubmit}
+          className="w-full md:w-1/2 lg:w-1/3 mx-auto block py-6 text-lg rounded-xl bg-emerald-600 hover:bg-emerald-700"
+        >
+          Confirm Order
+        </Button>
       </div>
     </div>
   );

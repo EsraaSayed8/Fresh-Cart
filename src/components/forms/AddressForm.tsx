@@ -48,25 +48,32 @@ export default function AddressForm({
       },
       {
         loading: "Updating your addresses...",
-        success: "Address added successfully!",
+        success: "Address added successfully! 🎉",
         error: (msg) => msg,
       }
     );
   }
 
   return (
-    <div className='h-full flex flex-col items-stretch px-10 py-15 justify-center'>
-      <h1 className='font-bold text-center text-3xl mb-8'>Add New Address</h1>
+    <div className="h-full flex flex-col items-stretch px-6 py-10 justify-center bg-gray-50 rounded-xl shadow-md">
+      <h1 className="font-bold text-center text-2xl mb-6 text-gray-700">
+        ➕ Add New Address
+      </h1>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(handleAddress)}>
+        <form onSubmit={form.handleSubmit(handleAddress)} className="space-y-4">
           <FormField
             control={form.control}
-            name='name'
+            name="name"
             render={({ field }) => (
-              <FormItem className='mb-4'>
-                <FormLabel>Alias:</FormLabel>
+              <FormItem>
+                <FormLabel className="text-gray-600">Alias</FormLabel>
                 <FormControl>
-                  <Input type='text' {...field} />
+                  <Input
+                    type="text"
+                    placeholder="e.g. Home, Work"
+                    className="rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -74,12 +81,17 @@ export default function AddressForm({
           />
           <FormField
             control={form.control}
-            name='city'
+            name="city"
             render={({ field }) => (
-              <FormItem className='mb-4'>
-                <FormLabel>City:</FormLabel>
+              <FormItem>
+                <FormLabel className="text-gray-600">City</FormLabel>
                 <FormControl>
-                  <Input type='text' {...field} />
+                  <Input
+                    type="text"
+                    placeholder="e.g. Cairo"
+                    className="rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -87,12 +99,17 @@ export default function AddressForm({
           />
           <FormField
             control={form.control}
-            name='details'
+            name="details"
             render={({ field }) => (
-              <FormItem className='mb-4'>
-                <FormLabel>Details:</FormLabel>
+              <FormItem>
+                <FormLabel className="text-gray-600">Details</FormLabel>
                 <FormControl>
-                  <Input type='text' {...field} />
+                  <Input
+                    type="text"
+                    placeholder="Street, Building, Floor"
+                    className="rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -100,20 +117,28 @@ export default function AddressForm({
           />
           <FormField
             control={form.control}
-            name='phone'
+            name="phone"
             render={({ field }) => (
-              <FormItem className='mb-4'>
-                <FormLabel>Phone:</FormLabel>
+              <FormItem>
+                <FormLabel className="text-gray-600">Phone</FormLabel>
                 <FormControl>
-                  <Input type='tel' {...field} />
+                  <Input
+                    type="tel"
+                    placeholder="+20 100 123 4567"
+                    className="rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
 
-          <Button type='submit' className=' my-4 w-full cursor-pointer'>
-            Add Address!
+          <Button
+            type="submit"
+            className="w-full bg-green-600 hover:bg-green-700 text-white rounded-lg py-2 text-lg"
+          >
+            Save Address
           </Button>
         </form>
       </Form>

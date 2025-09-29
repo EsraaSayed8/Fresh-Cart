@@ -28,75 +28,82 @@ export default function Navbar() {
   const { numberOfItems } = context;
 
   return (
-    <nav className='bg-white shadow-sm shadow-gray-300 fixed z-50 w-full'>
-      <div className='w-full lg:w-[90%] mx-auto p-4 flex gap-4'>
-        <div>
-          <Link href='/'>
-            <Image src={logo} alt='Fresh Cart Logo' width='200' />
+    <nav className="fixed z-50 w-full bg-white shadow-sm shadow-gray-300 transition-all duration-300">
+      <div className="w-full lg:w-[90%] mx-auto p-4 flex gap-4 items-center">
+        <div className="flex-shrink-0">
+          <Link href="/">
+            <Image
+              src={logo}
+              alt="Fresh Cart Logo"
+              width={200}
+              className="transition-transform duration-300 hover:scale-105"
+            />
           </Link>
         </div>
 
-        <div className='grow'>
-          <div className='hidden md:flex gap-4 h-full'>
-            <div className='grow flex justify-between h-full'>
-              <ul className='flex gap-4 items-center text-gray-600'>
-                <li className='hover:underline hover:text-emerald-600'>
+        <div className="grow hidden md:flex gap-4 h-full">
+          <div className="grow flex justify-between h-full">
+            <ul className="flex gap-6 items-center text-gray-700 font-medium">
+              <li>
+                <Link
+                  href="/"
+                  className={`transition-colors duration-200 hover:text-gray-900 ${
+                    pathname === "/" ? "underline underline-offset-4 text-gray-900" : ""
+                  }`}
+                >
+                  Home
+                </Link>
+              </li>
+              {session && (
+                <li className="relative">
                   <Link
-                    href='/'
-                    className={pathname === "/" ? "text-emerald-600" : ""}
+                    href="/cart"
+                    className={`transition-colors duration-200 hover:text-gray-900 ${
+                      pathname === "/cart" ? "underline underline-offset-4 text-gray-900" : ""
+                    }`}
                   >
-                    Home
+                    Cart
+                    {numberOfItems! > 0 && (
+                      <span className="absolute -top-2 -right-2 bg-gray-800 text-white w-5 h-5 flex items-center justify-center text-xs rounded-full shadow-sm">
+                        {numberOfItems}
+                      </span>
+                    )}
                   </Link>
                 </li>
-                {session && (
-                  <li className='hover:underline hover:text-emerald-600'>
-                    <Link
-                      href='/cart'
-                      className={`relative ${
-                        pathname === "/cart" && "text-emerald-600"
-                      }`}
-                    >
-                      Cart
-                      {numberOfItems! > 0 ? (
-                        <span className='absolute top-[-10px] right-[-10px] bg-black text-white size-5 rounded-full text-center text-sm'>
-                          {numberOfItems}
-                        </span>
-                      ) : (
-                        ""
-                      )}
-                    </Link>
-                  </li>
-                )}
-                <li className='hover:underline hover:text-emerald-600'>
-                  <Link
-                    href='/products'
-                    className={
-                      pathname === "/products" ? "text-emerald-600" : ""
-                    }
-                  >
-                    Products
-                  </Link>
-                </li>
-                <li className='hover:underline hover:text-emerald-600'>
-                  <Link
-                    href='/categories'
-                    className={
-                      pathname === "/categories" ? "text-emerald-600" : ""
-                    }
-                  >
-                    Categories
-                  </Link>
-                </li>
-                <li className='hover:underline hover:text-emerald-600'>
-                  <Link
-                    href='/brands'
-                    className={pathname === "/brands" ? "text-emerald-600" : ""}
-                  >
-                    Brands
-                  </Link>
-                </li>
-              </ul>
-              <ul className='hidden lg:flex gap-2 text-lg items-center'>
+              )}
+              <li>
+                <Link
+                  href="/products"
+                  className={`transition-colors duration-200 hover:text-gray-900 ${
+                    pathname === "/products" ? "underline underline-offset-4 text-gray-900" : ""
+                  }`}
+                >
+                  Products
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/categories"
+                  className={`transition-colors duration-200 hover:text-gray-900 ${
+                    pathname === "/categories" ? "underline underline-offset-4 text-gray-900" : ""
+                  }`}
+                >
+                  Categories
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/brands"
+                  className={`transition-colors duration-200 hover:text-gray-900 ${
+                    pathname === "/brands" ? "underline underline-offset-4 text-gray-900" : ""
+                  }`}
+                >
+                  Brands
+                </Link>
+              </li>
+            </ul>
+
+            <ul className='hidden lg:flex gap-2 text-lg items-center'>
                 <li>
                   <Link href='#'>
                     <i className='hover:text-xl hover:mx-0.5 mx-1 hover:text-pink-500 fab fa-instagram'></i>
@@ -128,226 +135,96 @@ export default function Navbar() {
                   </Link>
                 </li>
               </ul>
-            </div>
-            <ul className='flex gap-2 text-gray-600 items-center'>
-              {!session ? (
-                <>
-                  <li>
-                    <Link href='/login' className='hover:text-emerald-600'>
-                      Login
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href='/register' className='hover:text-emerald-600'>
-                      Signup
-                    </Link>
-                  </li>
-                </>
-              ) : (
-                <li>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger className='hover:text-emerald-600 cursor-pointer'>
-                      Profile
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                      <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem
-                        className='cursor-pointer'
-                        onClick={() => router.replace("/user")}
-                      >
-                        Profile
-                      </DropdownMenuItem>
-                      <DropdownMenuItem
-                        className='cursor-pointer'
-                        onClick={() => router.replace("/address")}
-                      >
-                        Addresses
-                      </DropdownMenuItem>
-                      <DropdownMenuItem
-                        className='cursor-pointer'
-                        onClick={() => router.replace("/wishlist")}
-                      >
-                        Wishlist
-                      </DropdownMenuItem>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem
-                        className='cursor-pointer'
-                        onClick={() => signOut({ callbackUrl: "/" })}
-                      >
-                        Logout
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </li>
-              )}
-            </ul>
           </div>
+
+          <ul className="flex gap-4 items-center text-gray-700">
+            {!session ? (
+              <>
+                <li>
+                  <Link className="hover:text-gray-900 transition-colors" href="/login">
+                    Login
+                  </Link>
+                </li>
+                <li>
+                  <Link className="hover:text-gray-900 transition-colors" href="/register">
+                    Signup
+                  </Link>
+                </li>
+              </>
+            ) : (
+              <li>
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="hover:text-gray-900 cursor-pointer transition-colors">
+                    Profile
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="bg-white text-gray-800 shadow-md rounded-lg">
+                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={() => router.replace("/user")}>
+                      Profile
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => router.replace("/address")}>
+                      Addresses
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => router.replace("/wishlist")}>
+                      Wishlist
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/" })}>
+                      Logout
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </li>
+            )}
+          </ul>
         </div>
 
-        <div className='md:hidden'>
+        <div className="md:hidden">
           <button
             onClick={() => setMenuToggle(!menuToggle)}
-            className='hover:bg-gray-50 rounded-md p-2 block relative'
+            className="hover:bg-gray-100 rounded-md p-2 transition-colors"
           >
-            <i className='fas fa-bars text-2xl font-bold text-gray-600 cursor-pointer'></i>
-            {numberOfItems! > 0 ? (
-              <span className='absolute top-[-5px] right-[-5px] bg-black text-white size-5 rounded-full text-center text-sm'>
+            <i className="fas fa-bars text-2xl text-gray-700 cursor-pointer"></i>
+            {numberOfItems! > 0 && (
+              <span className="absolute -top-1 -right-1 bg-gray-800 text-white w-5 h-5 flex items-center justify-center text-xs rounded-full shadow-sm">
                 {numberOfItems}
               </span>
-            ) : (
-              ""
             )}
           </button>
         </div>
       </div>
 
       {menuToggle && (
-        <div className='absolute w-full z-50 md:hidden'>
-          <div className='w-[95%] mx-auto p-4 bg-white rounded-lg mt-2 shadow-md shadow-gray-200'>
-            <ul className='flex flex-col text-center'>
+        <div className="absolute w-full z-50 md:hidden bg-white shadow-md rounded-b-lg p-4 transition-all">
+          <ul className="flex flex-col gap-2 text-center text-gray-700 font-medium">
+            {["/", "/products", "/categories", "/brands"].map((path) => (
               <li
+                key={path}
                 onClick={() => setMenuToggle(false)}
-                className='mb-2 rounded-md overflow-hidden text-white bg-black hover:bg-gray-950'
+                className="rounded-md hover:bg-gray-100 transition-colors"
               >
-                <Link className='block p-2' href='/'>
-                  Home
+                <Link className="block p-2" href={path}>
+                  {path === "/" ? "Home" : path.slice(1).charAt(0).toUpperCase() + path.slice(2)}
                 </Link>
               </li>
-              {session && (
-                <li
-                  onClick={() => setMenuToggle(false)}
-                  className='mb-2 rounded-md overflow-hidden text-white bg-black hover:bg-gray-950'
-                >
-                  <Link
-                    className='flex items-center gap-2 justify-center p-2'
-                    href='/cart'
-                  >
-                    Cart
-                    {numberOfItems! > 0 ? (
-                      <span className='block bg-white text-black size-5 rounded-full text-center text-sm'>
-                        {numberOfItems}
-                      </span>
-                    ) : (
-                      ""
-                    )}
-                  </Link>
-                </li>
-              )}
+            ))}
+            {session && (
               <li
                 onClick={() => setMenuToggle(false)}
-                className='mb-2 rounded-md overflow-hidden text-white bg-black hover:bg-gray-950'
+                className="rounded-md hover:bg-gray-100 transition-colors"
               >
-                <Link className='block p-2' href='/products'>
-                  Products
+                <Link className="flex items-center justify-center gap-2 p-2" href="/cart">
+                  Cart
+                  {numberOfItems! > 0 && (
+                    <span className="block bg-gray-800 text-white w-5 h-5 text-xs rounded-full flex items-center justify-center">
+                      {numberOfItems}
+                    </span>
+                  )}
                 </Link>
               </li>
-              <li
-                onClick={() => setMenuToggle(false)}
-                className='mb-2 rounded-md overflow-hidden text-white bg-black hover:bg-gray-950'
-              >
-                <Link className='block p-2' href='/categories'>
-                  Categories
-                </Link>
-              </li>
-              <li
-                onClick={() => setMenuToggle(false)}
-                className='mb-2 rounded-md overflow-hidden text-white bg-black hover:bg-gray-950'
-              >
-                <Link className='block p-2' href='/brands'>
-                  Brands
-                </Link>
-              </li>
-            </ul>
-            <hr className='mb-4' />
-            <div className='flex justify-between px-2'>
-              <ul className='flex gap-1 text-sm items-center'>
-                <li onClick={() => setMenuToggle(false)}>
-                  <Link href='#'>
-                    <i className='hover:text-xl hover:mx-0.5 mx-1 hover:text-pink-500 fab fa-instagram'></i>
-                  </Link>
-                </li>
-                <li onClick={() => setMenuToggle(false)}>
-                  <Link href='#'>
-                    <i className='hover:text-xl hover:mx-0.5 mx-1 hover:text-blue-600 fab fa-facebook'></i>
-                  </Link>
-                </li>
-                <li onClick={() => setMenuToggle(false)}>
-                  <Link href='#'>
-                    <i className='hover:text-xl hover:mx-0.5 mx-1 fab fa-tiktok'></i>
-                  </Link>
-                </li>
-                <li onClick={() => setMenuToggle(false)}>
-                  <Link href='#'>
-                    <i className='hover:text-xl hover:mx-0.5 mx-1 fab fa-x-twitter'></i>
-                  </Link>
-                </li>
-                <li onClick={() => setMenuToggle(false)}>
-                  <Link href='#'>
-                    <i className='hover:text-xl hover:mx-0.5 mx-1 hover:text-blue-900 fab fa-linkedin'></i>
-                  </Link>
-                </li>
-                <li onClick={() => setMenuToggle(false)}>
-                  <Link href='#'>
-                    <i className='hover:text-xl hover:mx-0.5 mx-1 hover:text-red-600 fab fa-youtube'></i>
-                  </Link>
-                </li>
-              </ul>
-              <ul className='flex gap-2 text-gray-600 items-center'>
-                {!session ? (
-                  <>
-                    <li onClick={() => setMenuToggle(false)}>
-                      <Link href='/login' className='hover:text-emerald-600'>
-                        Login
-                      </Link>
-                    </li>
-                    <li onClick={() => setMenuToggle(false)}>
-                      <Link href='/register' className='hover:text-emerald-600'>
-                        Signup
-                      </Link>
-                    </li>
-                  </>
-                ) : (
-                  <li onClick={() => setMenuToggle(false)}>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger className='hover:text-emerald-600 cursor-pointer'>
-                        Profile
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent>
-                        <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem
-                          className='cursor-pointer'
-                          onClick={() => router.replace("/user")}
-                        >
-                          Profile
-                        </DropdownMenuItem>
-                        <DropdownMenuItem
-                          className='cursor-pointer'
-                          onClick={() => router.replace("/address")}
-                        >
-                          Addresses
-                        </DropdownMenuItem>
-                        <DropdownMenuItem
-                          className='cursor-pointer'
-                          onClick={() => router.replace("/wishlist")}
-                        >
-                          Wishlist
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem
-                          className='cursor-pointer'
-                          onClick={() => signOut({ callbackUrl: "/" })}
-                        >
-                          Logout
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </li>
-                )}
-              </ul>
-            </div>
-          </div>
+            )}
+          </ul>
         </div>
       )}
     </nav>

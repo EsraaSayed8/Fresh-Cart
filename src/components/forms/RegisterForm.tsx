@@ -34,122 +34,66 @@ export default function RegisterForm() {
     try {
       const res = await fetch("/api/signup", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
       });
 
       const payload = await res.json().catch(() => ({}));
 
       if (res.ok) {
-        toast.success("You Registerd Successfully 👌", {
-          position: "bottom-right",
-          duration: 2000,
-        });
+        toast.success("You Registered Successfully 👌", { position: "bottom-right", duration: 2000 });
         router.push("/login");
       } else {
-        const msg =
-          payload?.message ||
-          payload?.error ||
-          payload?.errors?.[0] ||
-          "Request could not be made!";
+        const msg = payload?.message || payload?.error || payload?.errors?.[0] || "Request could not be made!";
         throw new Error(msg);
       }
     } catch (error) {
       if (error instanceof TypeError) {
-        toast.error("Failed to send request, you might be offline!", {
-          position: "bottom-right",
-          duration: 2000,
-        });
+        toast.error("Failed to send request, you might be offline!", { position: "bottom-right", duration: 2000 });
       } else if (error instanceof Error) {
-        toast.error(error.message, {
-          position: "bottom-right",
-          duration: 2000,
-        });
+        toast.error(error.message, { position: "bottom-right", duration: 2000 });
       }
     }
   }
 
   return (
-    <div className="m-10">
-      <h1 className="font-bold text-center text-[#0c5a5cdc] text-3xl my-8">Sign Up</h1>
+    <div className="p-8">
+      <h1 className="text-3xl font-bold text-center text-emerald-600 mb-8">Sign Up</h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleRegister)}>
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem className="mb-4">
-                <FormLabel>Name:</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem className="mb-4">
-                <FormLabel>Email:</FormLabel>
-                <FormControl>
-                  <Input type="email" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="phone"
-            render={({ field }) => (
-              <FormItem className="mb-4">
-                <FormLabel>Phone:</FormLabel>
-                <FormControl>
-                  <Input type="tel" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem className="mb-4">
-                <FormLabel>Password:</FormLabel>
-                <FormControl>
-                  <Input type="password" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="rePassword"
-            render={({ field }) => (
-              <FormItem className="mb-4">
-                <FormLabel>Confirm Password:</FormLabel>
-                <FormControl>
-                  <Input type="password" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div className="text-gray-600 text-center w-full">
+          {["name", "email", "phone", "password", "rePassword"].map((fieldName) => (
+            <FormField
+              key={fieldName}
+              control={form.control}
+              name={fieldName as keyof RegisterSchemaType}
+              render={({ field }) => (
+                <FormItem className="mb-4">
+                  <FormLabel className="font-semibold text-gray-700 capitalize">
+                    {fieldName === "rePassword" ? "Confirm Password" : fieldName}
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      type={fieldName.includes("password") ? "password" : fieldName === "email" ? "email" : fieldName === "phone" ? "tel" : "text"}
+                      className="rounded-lg border-gray-300 focus:border-emerald-600 focus:ring-emerald-600"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          ))}
+
+          <div className="text-gray-600 text-center mb-4">
             Already have an account?{" "}
-            <Link href="/login" className="underline text-[#0c5a5cdc] font-bold">
+            <Link href="/login" className="underline text-emerald-700 font-semibold hover:text-emerald-800">
               Login!
             </Link>
           </div>
+
           <Button
             type="submit"
-            className=" my-4 w-full bg-[#0c5a5cdc] hover:bg-white hover:text-[#0c5a5cdc] cursor-pointer"
+            className="w-full py-2 rounded-lg bg-emerald-700 text-white hover:bg-white hover:text-emerald-700 border border-emerald-700 transition-colors duration-300"
           >
             Register Now
           </Button>

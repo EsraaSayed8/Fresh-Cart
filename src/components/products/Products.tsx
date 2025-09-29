@@ -2,7 +2,6 @@ import React from "react";
 import Product from "./Product";
 import Pages from "./Pages";
 import Image from "next/image";
-import image from "../../../public/error.png";
 import { ProductType } from "@/types/product.type";
 import { MetadataType } from "@/types/metadata.type";
 import { ResponseDataType } from "@/types/responseData.type";
@@ -39,7 +38,13 @@ export default async function Products({
         <div className='w-[90%] lg:w-[70%] mx-auto p-4 flex flex-col items-center gap-2 mt-8'>
           <h1 className='text-gray-600 mb-0'>{err.message}</h1>
           <span>Please try again later.</span>
-          <Image src={image} alt='404 Products Not Found!' width={800} />
+          <Image
+            src="/error.svg" // من public مباشرة
+            alt='404 Products Not Found!'
+            width={800}
+            height={600} // ضروري تحديد height
+            className="mt-4"
+          />
         </div>
       );
   }

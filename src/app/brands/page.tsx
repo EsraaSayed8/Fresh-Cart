@@ -9,13 +9,16 @@ export default async function Brands() {
   if (!brandsRes.ok) throw new Error("Failed to fetch brands");
 
   const payload: ResponseDataType<BrandType> = await brandsRes.json();
-
   const { data: brands } = payload;
 
   return (
-    <div className='flex flex-col items-center justify-center py-2 min-h-[90vh]'>
-      <div className='w-[90%] lg:w-[70%] mx-auto my-4'>
-        <div className='flex flex-wrap'>
+    <div className="flex flex-col items-center justify-center py-12 min-h-[90vh] bg-gray-50">
+      <div className="w-[95%] lg:w-[80%] mx-auto">
+        <h2 className="text-3xl md:text-4xl font-bold text-gray-800 text-center mb-12">
+          Our Brands
+        </h2>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 justify-items-center">
           {brands.map((brand: BrandType) => (
             <Brand key={brand._id} brand={brand} />
           ))}

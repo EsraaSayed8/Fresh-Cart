@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import image from "../../public/error.png";
+import image from "../../public/error.svg";
 import Link from "next/link";
 
 export default function NotFound() {

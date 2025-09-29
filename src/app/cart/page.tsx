@@ -39,7 +39,7 @@ export default function Cart() {
   let total = 0;
   return (
     <div className='w-[90%] lg:w-[70%] mx-auto p-4 min-h-[90vh]'>
-      <div className='flex flex-col bg-gray-200 gap-4'>
+      <div className='flex flex-col gap-4'>
         {cart!.products.length > 0 ? (
           cart!.products.map((cartItem: CartItemType) => {
             total += cartItem.count * cartItem.price;

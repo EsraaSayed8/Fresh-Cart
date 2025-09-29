@@ -36,7 +36,7 @@ export default function RootLayout({
         <AuthSessionProvider>
           <CartContextProvider>
             <Navbar />
-            <div className='pt-[76px] bg-[#045b5c6e]'>{children}</div>
+            <div className='pt-[76px] '>{children}</div>
             <Toaster />
             <Footer />
           </CartContextProvider>

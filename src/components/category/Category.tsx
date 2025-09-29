@@ -41,38 +41,35 @@ export default async function Category({
   }
 
   return (
-    <div className='w-1/2 md:w-1/3 lg:w-1/4 xl:1/5'>
-      <div className='p-2 lg:p-4'>
-        <Link href={`/categories/${category._id}`}>
-          <Card className='gap-1 p-2  aspect-[2/4]'>
-            <CardHeader className='px-2!'>
-              <CardTitle>
-                <Image
-                  src={category.image}
-                  alt='Category Image'
-                  width={500}
-                  height={500}
-                  className='object-contain w-full'
-                />
-              </CardTitle>
-              <CardDescription className='text-emerald-500 font-semibold text-sm lg:text-lg line-clamp-1'>
-                {category.name}
-              </CardDescription>
-            </CardHeader>
-            <CardContent className='px-2!'>
-              {subCategories.length > 0 ? (
-                <p className='line-clamp-2 lg:line-clamp-2 text-sm lg:text-lg text-gray-600'>
-                  {subCategories
-                    .map((subCategory: SubcategoryType) => subCategory.name)
-                    .join(" | ")}
-                </p>
-              ) : (
-                ""
-              )}
-            </CardContent>
-          </Card>
-        </Link>
-      </div>
+    <div className="w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 p-2 lg:p-4">
+      <Link href={`/categories/${category._id}`}>
+        <Card className="flex flex-col gap-2 p-3 aspect-[2/4] rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 bg-white">
+          <CardHeader className="flex flex-col items-center px-0">
+            <CardTitle className="w-full">
+              <Image
+                src={category.image}
+                alt="Category Image"
+                width={500}
+                height={500}
+                className="object-cover w-full h-40 lg:h-48 rounded-xl mb-2"
+              />
+            </CardTitle>
+            <CardDescription className="text-emerald-600 font-semibold text-sm lg:text-lg text-center truncate">
+              {category.name}
+            </CardDescription>
+          </CardHeader>
+
+          <CardContent className="px-0">
+            {subCategories.length > 0 && (
+              <p className="text-gray-600 text-xs lg:text-sm text-center line-clamp-2">
+                {subCategories
+                  .map((subCategory: SubcategoryType) => subCategory.name)
+                  .join(" | ")}
+              </p>
+            )}
+          </CardContent>
+        </Card>
+      </Link>
     </div>
   );
 }

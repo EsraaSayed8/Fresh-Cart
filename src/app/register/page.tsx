@@ -3,13 +3,10 @@ import React from "react";
 
 export default function Register() {
   return (
-<div className="flex items-center justify-center h-[90vh] m-6 lg:m-0">
-  <div className="w-full md:w-[70%] mx-auto m-4 flex flex-col items-stretch shadow-gray-400 shadow-md rounded-md overflow-hidden">
-    <div className="w-full bg-gray-100">
-      <RegisterForm />
+    <div className="flex items-center justify-center min-h-[90vh] px-6 bg-gray-50">
+      <div className="w-full md:w-[70%] lg:w-[50%] mx-auto flex flex-col shadow-lg rounded-xl overflow-hidden bg-white">
+        <RegisterForm />
+      </div>
     </div>
-  </div>
-</div>
-
   );
 }

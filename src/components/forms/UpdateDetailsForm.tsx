@@ -1,6 +1,15 @@
 "use client";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  updateNameSchema,
+  updateEmailSchema,
+  updatePhoneSchema,
+  NameSchemaType,
+  EmailSchemaType,
+  PhoneSchemaType,
+} from "@/schema/userDetails.shema";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -10,43 +19,28 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  EmailSchemaType,
-  NameSchemaType,
-  PhoneSchemaType,
-  updateEmailSchema,
-  updateNameSchema,
-  updatePhoneSchema,
-} from "@/schema/userDetails.shema";
 import { Input } from "@/components/ui/input";
 import updateLoggedUserData from "@/utilities/updateLoggedUserData";
-import { AuthError } from "@/errors/AuthErrors";
 import { toast } from "sonner";
+import { AuthError } from "@/errors/AuthErrors";
+
+type UpdateDetailsType = NameSchemaType & EmailSchemaType & PhoneSchemaType;
+
+const combinedSchema = updateNameSchema
+  .merge(updateEmailSchema)
+  .merge(updatePhoneSchema);
 
 export default function UpdateDetailsForm() {
-  const name = useForm({
+  const form = useForm<UpdateDetailsType>({
+    resolver: zodResolver(combinedSchema),
     defaultValues: {
       name: "",
-    },
-    resolver: zodResolver(updateNameSchema),
-  });
-  const email = useForm({
-    defaultValues: {
       email: "",
-    },
-    resolver: zodResolver(updateEmailSchema),
-  });
-  const phone = useForm({
-    defaultValues: {
       phone: "",
     },
-    resolver: zodResolver(updatePhoneSchema),
   });
 
-  async function handleClick(
-    values: NameSchemaType | EmailSchemaType | PhoneSchemaType
-  ) {
+  async function handleSubmit(values: UpdateDetailsType) {
     toast.promise(
       async () => {
         try {
@@ -55,84 +49,75 @@ export default function UpdateDetailsForm() {
           if (error instanceof AuthError) {
             return error.message;
           }
-          return "Faild to send request, you might be offline!";
+          return "Failed to update details, you might be offline!";
         }
       },
       {
-        loading: "Updating your profile...",
-        success: "Profile updated successfully!",
-        error: (message) => message,
+        loading: "Updating details...",
+        success: "Details updated successfully!",
+        error: (msg) => msg,
       }
     );
   }
 
   return (
-    <div className='rounded-lg shadow-lg shadow-gray-200 py-4 px-8 w-full lg:w-1/2'>
-      <h1 className='font-bold text-center text-3xl mb-8'>Update Details</h1>
-      <Form {...name}>
-        <form onSubmit={name.handleSubmit(handleClick)}>
+    <div className="rounded-lg shadow-lg shadow-gray-200 py-6 px-8 w-full lg:w-1/2 bg-white">
+      <h1 className="font-bold text-center text-2xl mb-6 text-emerald-700">
+        Update Details
+      </h1>
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(handleSubmit)}
+          className="flex flex-col gap-4"
+        >
           <FormField
-            control={name.control}
-            name='name'
+            control={form.control}
+            name="name"
             render={({ field }) => (
-              <FormItem className='mb-4'>
-                <FormLabel>Name:</FormLabel>
-                <FormControl className='flex gap-2'>
-                  <div>
-                    <Input className='w-3/4' type='text' {...field} />
-                    <Button type='submit' className='w-1/4 cursor-pointer'>
-                      Update
-                    </Button>
-                  </div>
+              <FormItem>
+                <FormLabel className="text-sm font-medium">Username</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter your name" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-        </form>
-      </Form>
-      <Form {...email}>
-        <form onSubmit={email.handleSubmit(handleClick)}>
+
           <FormField
-            control={email.control}
-            name='email'
+            control={form.control}
+            name="email"
             render={({ field }) => (
-              <FormItem className='mb-4'>
-                <FormLabel>Email:</FormLabel>
-                <FormControl className='flex gap-2'>
-                  <div>
-                    <Input className='w-3/4' type='email' {...field} />
-                    <Button type='submit' className='w-1/4 cursor-pointer'>
-                      Update
-                    </Button>
-                  </div>
+              <FormItem>
+                <FormLabel className="text-sm font-medium">Email</FormLabel>
+                <FormControl>
+                  <Input type="email" placeholder="Enter your email" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-        </form>
-      </Form>
-      <Form {...phone}>
-        <form onSubmit={phone.handleSubmit(handleClick)}>
+
           <FormField
-            control={phone.control}
-            name='phone'
+            control={form.control}
+            name="phone"
             render={({ field }) => (
-              <FormItem className='mb-4'>
-                <FormLabel>Phone:</FormLabel>
-                <FormControl className='flex gap-2'>
-                  <div>
-                    <Input className='w-3/4' type='tel' {...field} />
-                    <Button type='submit' className='w-1/4 cursor-pointer'>
-                      Update
-                    </Button>
-                  </div>
+              <FormItem>
+                <FormLabel className="text-sm font-medium">Phone</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter your phone" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
+
+          <Button
+            type="submit"
+            className="mt-4 w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg shadow-md"
+          >
+            Update Details
+          </Button>
         </form>
       </Form>
     </div>

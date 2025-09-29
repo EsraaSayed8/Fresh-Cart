@@ -43,20 +43,43 @@ export default function AddressManagmentPage() {
 
   if (loading)
     return (
-      <div className='flex flex-col items-center justify-center py-8 min-h-[90vh]'>
-        <span className='loader'></span>
+      <div className="flex flex-col items-center justify-center py-8 min-h-[90vh]">
+        <span className="loader"></span>
       </div>
     );
 
   return (
-    <div className='w-full lg:w-[70%] mx-auto flex items-center py-8 min-h-[90vh]'>
-      <div className='w-full flex flex-wrap mx-4 rounded-md overflow-hidden shadow-gray-300 shadow-lg justify-items-stretch'>
-        <div className='w-full lg:w-full'>
-          <h2 className='text-3xl text-white text-center border-2 p-2'>
-                You haven&apos;t added any addresses yet!
-              </h2>
-          <AddressForm setAddressess={setAddressess} />
-        </div>
+    <div className="w-full lg:w-[70%] mx-auto py-12 min-h-[90vh]">
+      <div className="bg-white rounded-2xl shadow-lg p-8">
+        {addressess.length === 0 ? (
+          <h2 className="text-2xl font-semibold text-center text-gray-600 mb-6">
+            You haven&apos;t added any addresses yet 🚚
+          </h2>
+        ) : (
+          <div className="grid gap-6 mb-8">
+            {addressess.map((address) => (
+              <div
+                key={address._id}
+                className="border border-gray-200 rounded-lg p-4 flex justify-between items-center hover:shadow-md transition"
+              >
+                <div>
+                  <h3 className="font-semibold text-lg">{address.name}</h3>
+                  <p className="text-sm text-gray-600">{address.city}</p>
+                  <p className="text-sm text-gray-500">{address.details}</p>
+                  <p className="text-sm text-gray-500">{address.phone}</p>
+                </div>
+                <button
+                  onClick={() => handleDelete(address._id)}
+                  className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
+                >
+                  Delete
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <AddressForm setAddressess={setAddressess} />
       </div>
     </div>
   );
