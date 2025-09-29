@@ -136,7 +136,6 @@ export default function CheckoutPage() {
           Please choose a payment option and an address
         </p>
 
-        {/* Address Selector */}
         <div>
           <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
