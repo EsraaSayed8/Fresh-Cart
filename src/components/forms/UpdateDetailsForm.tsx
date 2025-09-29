@@ -2,7 +2,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
-import updateLoggedUserPassword from "@/utilities/updateLoggedUserPassword"; // دالة منفصلة لتحديث الباسورد
+import updateLoggedUserPassword from "@/utilities/updateLoggedUserPassword"; 
 import { toast } from "sonner";
 import { AuthError } from "@/errors/AuthErrors";
 
@@ -25,7 +25,7 @@ export default function UpdatePasswordForm() {
     toast.promise(
       async () => {
         try {
-          await updateLoggedUserPassword(values); // دالة مخصصة للباسورد
+          await updateLoggedUserPassword(values); 
         } catch (error) {
           if (error instanceof AuthError) return error.message;
           return "Failed to update password!";
