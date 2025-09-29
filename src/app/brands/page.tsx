@@ -14,7 +14,7 @@ export default async function Brands() {
     }
   } catch (error) {
     console.warn("Failed to fetch brands, showing empty list.", error);
-    // brands هتفضل فاضية لو حصل أي error
+    
   }
 
   return (
