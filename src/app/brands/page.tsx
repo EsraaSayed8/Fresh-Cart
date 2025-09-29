@@ -4,15 +4,18 @@ import { ResponseDataType } from "@/types/responseData.type";
 import React from "react";
 
 export default async function Brands() {
-  // استخدم fallback لو process.env.API_BASEURL undefined
-  const baseUrl = process.env.API_BASEURL || "https://linked-posts.routemisr.com";
+  let brands: BrandType[] = [];
 
-  const brandsRes = await fetch(`${baseUrl}/brands`);
-
-  if (!brandsRes.ok) throw new Error("Failed to fetch brands");
-
-  const payload: ResponseDataType<BrandType> = await brandsRes.json();
-  const { data: brands } = payload;
+  try {
+    const brandsRes = await fetch(`${process.env.API_BASEURL}/brands`);
+    if (brandsRes.ok) {
+      const payload: ResponseDataType<BrandType> = await brandsRes.json();
+      brands = payload.data;
+    }
+  } catch (error) {
+    console.warn("Failed to fetch brands, showing empty list.", error);
+    // brands هتفضل فاضية لو حصل أي error
+  }
 
   return (
     <div className="flex flex-col items-center justify-center py-12 min-h-[90vh] bg-gray-50">
@@ -22,9 +25,13 @@ export default async function Brands() {
         </h2>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 justify-items-center">
-          {brands.map((brand: BrandType) => (
-            <Brand key={brand._id} brand={brand} />
-          ))}
+          {brands.length > 0 ? (
+            brands.map((brand: BrandType) => <Brand key={brand._id} brand={brand} />)
+          ) : (
+            <p className="text-gray-500 col-span-full text-center">
+              No brands available
+            </p>
+          )}
         </div>
       </div>
     </div>
